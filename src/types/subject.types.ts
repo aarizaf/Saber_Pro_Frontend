@@ -6,7 +6,8 @@ export type SubjectId =
   | 'lectura-critica'
   | 'ingles'
   | 'ciencias-naturales'
-  | 'competencias-ciudadanas';
+  | 'competencias-ciudadanas'
+  | 'comunicacion-escrita';
 
 /**
  * Clave que identifica el ícono de MUI para la materia.
@@ -17,7 +18,8 @@ export type SubjectIconKey =
   | 'menu-book'
   | 'language'
   | 'science'
-  | 'account-balance';
+  | 'account-balance'
+  | 'edit-note';
 
 /**
  * Información estática de una materia: metadatos de presentación.

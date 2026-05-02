@@ -42,5 +42,11 @@ export const MOCK_USER_PROGRESS: UserProgress = {
       correctAnswers: 26,
       lastAttempt: '2026-04-29',
     },
+    'comunicacion-escrita': {
+      subjectId: 'comunicacion-escrita',
+      completedQuestions: 0,
+      totalQuestions: 35,
+      correctAnswers: 0,
+    },
   },
 };

@@ -3,6 +3,7 @@ import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
 import LanguageIcon from '@mui/icons-material/Language';
 import ScienceOutlinedIcon from '@mui/icons-material/ScienceOutlined';
 import AccountBalanceOutlinedIcon from '@mui/icons-material/AccountBalanceOutlined';
+import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 import type { SubjectIconKey } from '../../../../types/subject.types';
 import type { Subject } from '../../../../types/subject.types';
 import type { SubjectProgress } from '../../../../types/progress.types';
@@ -14,6 +15,7 @@ const ICON_MAP: Record<SubjectIconKey, React.ReactNode> = {
   'language': <LanguageIcon fontSize="large" />,
   'science': <ScienceOutlinedIcon fontSize="large" />,
   'account-balance': <AccountBalanceOutlinedIcon fontSize="large" />,
+  'edit-note': <EditNoteOutlinedIcon fontSize="large" />,
 };
 
 interface SubjectCardProps {

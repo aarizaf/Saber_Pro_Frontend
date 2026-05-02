@@ -55,4 +55,14 @@ export const SUBJECTS: Subject[] = [
     progressColor: 'bg-rose-500',
     totalQuestions: 40,
   },
+  {
+    id: 'comunicacion-escrita',
+    name: 'Comunicación Escrita',
+    description: 'Desarrolla tu capacidad para producir textos coherentes, claros y con argumentos sólidos.',
+    iconKey: 'edit-note',
+    accentColor: 'text-teal-600',
+    bgColor: 'bg-teal-50 hover:bg-teal-100',
+    progressColor: 'bg-teal-500',
+    totalQuestions: 35,
+  },
 ];

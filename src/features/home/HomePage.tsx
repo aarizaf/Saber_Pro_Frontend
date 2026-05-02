@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { DailyStats } from './components/DailyStats/DailyStats';
 import { LevelMap } from './components/LevelMap/LevelMap';
 import { SubjectGrid } from './components/SubjectGrid/SubjectGrid';
@@ -16,10 +17,10 @@ export const HomePage = () => {
   const { userProgress, stats, getSubjectProgress, overallCompletionPct, overallAccuracyPct } =
     useUserProgress();
 
+  const navigate = useNavigate();
+
   const handleSelectSubject = (subjectId: string) => {
-    // TODO: Conectar con React Router en la siguiente iteración
-    // navigate(`/quiz/${subjectId}`)
-    console.log(`Materia seleccionada: ${subjectId}`);
+    navigate(`/quiz/${subjectId}`);
   };
 
   return (
