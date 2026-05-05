@@ -2,14 +2,9 @@ interface CircularProgressProps {
   percentage: number;
   size?: number;
   strokeWidth?: number;
-  /** Color del arco activo en formato hex o clase que use stroke */
   strokeColor?: string;
 }
 
-/**
- * Indicador de progreso circular basado en SVG.
- * El porcentaje se limita al rango [0, 100] automáticamente.
- */
 export const CircularProgress = ({
   percentage,
   size = 64,
@@ -31,16 +26,7 @@ export const CircularProgress = ({
       aria-label={`Progreso: ${clamped}%`}
     >
       <svg width={size} height={size} className="-rotate-90" aria-hidden="true">
-        {/* Pista base */}
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="none"
-          stroke="#e5e7eb"
-          strokeWidth={strokeWidth}
-        />
-        {/* Arco de progreso */}
+        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="#e5e7eb" strokeWidth={strokeWidth} />
         <circle
           cx={size / 2}
           cy={size / 2}

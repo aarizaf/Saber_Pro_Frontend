@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
-import type { OptionId, QuizAnswerRecord, QuizSession } from '../../../types/quiz.types';
-import type { SubjectId } from '../../../types/subject.types';
-import { getQuestionsBySubject } from '../../../mocks/questions.mock';
+import type { OptionId, QuizAnswerRecord, QuizSession, SubjectId } from '../types';
+import { getQuestionsBySubject } from '../mocks/questions.mock';
 
 interface UseQuizReturn {
   session: QuizSession;
@@ -23,14 +22,8 @@ const buildInitialSession = (subjectId: SubjectId): QuizSession => ({
   isFinished: false,
 });
 
-/**
- * Gestiona toda la lógica de una sesión de preguntas.
- * Completamente desacoplado de la UI.
- */
 export const useQuiz = (subjectId: SubjectId): UseQuizReturn => {
-  const [session, setSession] = useState<QuizSession>(() =>
-    buildInitialSession(subjectId)
-  );
+  const [session, setSession] = useState<QuizSession>(() => buildInitialSession(subjectId));
   const [selectedOptionId, setSelectedOptionId] = useState<OptionId | null>(null);
   const [hasAnswered, setHasAnswered] = useState(false);
 
@@ -50,11 +43,7 @@ export const useQuiz = (subjectId: SubjectId): UseQuizReturn => {
     if (!selectedOptionId || hasAnswered) return;
     const currentQuestion = session.questions[session.currentIndex];
     const isCorrect = selectedOptionId === currentQuestion.correctOptionId;
-    const record: QuizAnswerRecord = {
-      questionId: currentQuestion.id,
-      selectedOptionId,
-      isCorrect,
-    };
+    const record: QuizAnswerRecord = { questionId: currentQuestion.id, selectedOptionId, isCorrect };
     setSession((prev) => ({ ...prev, answers: [...prev.answers, record] }));
     setHasAnswered(true);
   };
@@ -75,15 +64,5 @@ export const useQuiz = (subjectId: SubjectId): UseQuizReturn => {
     setHasAnswered(false);
   };
 
-  return {
-    session,
-    selectedOptionId,
-    hasAnswered,
-    isLastQuestion,
-    correctCount,
-    selectOption,
-    confirmAnswer,
-    nextQuestion,
-    restartQuiz,
-  };
+  return { session, selectedOptionId, hasAnswered, isLastQuestion, correctCount, selectOption, confirmAnswer, nextQuestion, restartQuiz };
 };

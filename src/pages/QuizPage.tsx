@@ -1,35 +1,21 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useQuiz } from './hooks/useQuiz';
-import { QuizHeader } from './components/QuizHeader/QuizHeader';
-import { QuestionCard } from './components/QuestionCard/QuestionCard';
-import { AnswerOptions } from './components/AnswerOptions/AnswerOptions';
-import { AnswerFeedback } from './components/AnswerFeedback/AnswerFeedback';
-import { QuizResults } from './components/QuizResults/QuizResults';
-import { SUBJECTS } from '../../mocks/subjects.mock';
-import type { SubjectId } from '../../types/subject.types';
-import type { OptionId } from '../../types/quiz.types';
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+import { useQuiz } from '../hooks/useQuiz';
+import { AnswerOptions } from '../components/AnswerOptions';
+import { AnswerFeedback } from '../components/AnswerFeedback';
+import { QuizResults } from '../components/QuizResults';
+import { ProgressBar } from '../components/ProgressBar';
+import { SUBJECTS } from '../mocks/data.mock';
+import type { SubjectId, OptionId } from '../types';
 
-/**
- * Página de quiz para una materia específica.
- * Lee el subjectId desde la URL y orquesta todos los subcomponentes.
- */
 export const QuizPage = () => {
   const { subjectId } = useParams<{ subjectId: string }>();
   const navigate = useNavigate();
 
   const subject = SUBJECTS.find((s) => s.id === subjectId);
 
-  const {
-    session,
-    selectedOptionId,
-    hasAnswered,
-    isLastQuestion,
-    correctCount,
-    selectOption,
-    confirmAnswer,
-    nextQuestion,
-    restartQuiz,
-  } = useQuiz((subjectId as SubjectId) ?? 'lectura-critica');
+  const { session, selectedOptionId, hasAnswered, isLastQuestion, correctCount, selectOption, confirmAnswer, nextQuestion, restartQuiz } =
+    useQuiz((subjectId as SubjectId) ?? 'lectura-critica');
 
   if (!subject) {
     return (
@@ -67,21 +53,46 @@ export const QuizPage = () => {
 
   const currentQuestion = session.questions[session.currentIndex];
   const lastAnswer = session.answers[session.answers.length - 1];
+  const progressPct =
+    session.questions.length > 0
+      ? Math.round((session.currentIndex / session.questions.length) * 100)
+      : 0;
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <QuizHeader
-        subjectName={subject.name}
-        currentIndex={session.currentIndex}
-        totalQuestions={session.questions.length}
-        onBack={() => navigate('/')}
-      />
+      {/* Cabecera del quiz */}
+      <div className="bg-white border-b border-gray-200 px-4 py-4 sticky top-0 z-10">
+        <div className="max-w-3xl mx-auto">
+          <div className="flex items-center gap-4 mb-3">
+            <button
+              onClick={() => navigate('/')}
+              aria-label="Volver al inicio"
+              className="text-gray-400 hover:text-indigo-600 transition-colors flex-shrink-0"
+            >
+              <ArrowBackRoundedIcon />
+            </button>
+            <div className="flex-1 min-w-0">
+              <p className="font-semibold text-gray-800 truncate">{subject.name}</p>
+              <p className="text-xs text-gray-400">
+                Pregunta {session.currentIndex + 1} de {session.questions.length}
+              </p>
+            </div>
+            <span className="text-sm font-bold text-indigo-600 flex-shrink-0">{progressPct}%</span>
+          </div>
+          <ProgressBar percentage={progressPct} colorClass="bg-indigo-500" heightClass="h-1.5" />
+        </div>
+      </div>
 
       <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-6 space-y-4">
-        <QuestionCard
-          questionNumber={session.currentIndex + 1}
-          statement={currentQuestion.statement}
-        />
+        {/* Enunciado de la pregunta */}
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+          <p className="text-xs font-semibold text-indigo-400 uppercase tracking-widest mb-3">
+            Pregunta {session.currentIndex + 1}
+          </p>
+          <p className="text-gray-900 text-lg font-medium leading-relaxed">
+            {currentQuestion.statement}
+          </p>
+        </div>
 
         <AnswerOptions
           options={currentQuestion.options}
@@ -92,13 +103,9 @@ export const QuizPage = () => {
         />
 
         {hasAnswered && lastAnswer && (
-          <AnswerFeedback
-            isCorrect={lastAnswer.isCorrect}
-            explanation={currentQuestion.explanation}
-          />
+          <AnswerFeedback isCorrect={lastAnswer.isCorrect} explanation={currentQuestion.explanation} />
         )}
 
-        {/* Botones de acción */}
         <div className="flex justify-end pt-2">
           {!hasAnswered ? (
             <button

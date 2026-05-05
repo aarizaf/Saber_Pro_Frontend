@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { HomePage } from './features/home/HomePage';
-import { QuizPage } from './features/quiz/QuizPage';
+import { HomePage } from './pages/HomePage';
+import { QuizPage } from './pages/QuizPage';
 
 function App() {
   return (

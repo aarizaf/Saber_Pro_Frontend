@@ -18,23 +18,18 @@ interface LevelNodeDef {
 }
 
 const LEVEL_NODES: LevelNodeDef[] = [
-  { id: 1, title: 'Explorador',   requiredPct: 0,   icon: <ExploreOutlinedIcon /> },
-  { id: 2, title: 'Aprendiz',     requiredPct: 20,  icon: <SchoolOutlinedIcon /> },
-  { id: 3, title: 'Practicante',  requiredPct: 40,  icon: <AutoStoriesOutlinedIcon /> },
-  { id: 4, title: 'Avanzado',     requiredPct: 60,  icon: <EmojiEventsOutlinedIcon /> },
-  { id: 5, title: 'Experto',      requiredPct: 80,  icon: <WorkspacePremiumOutlinedIcon /> },
-  { id: 6, title: 'Maestro',      requiredPct: 100, icon: <MilitaryTechOutlinedIcon /> },
+  { id: 1, title: 'Explorador',  requiredPct: 0,   icon: <ExploreOutlinedIcon /> },
+  { id: 2, title: 'Aprendiz',    requiredPct: 20,  icon: <SchoolOutlinedIcon /> },
+  { id: 3, title: 'Practicante', requiredPct: 40,  icon: <AutoStoriesOutlinedIcon /> },
+  { id: 4, title: 'Avanzado',    requiredPct: 60,  icon: <EmojiEventsOutlinedIcon /> },
+  { id: 5, title: 'Experto',     requiredPct: 80,  icon: <WorkspacePremiumOutlinedIcon /> },
+  { id: 6, title: 'Maestro',     requiredPct: 100, icon: <MilitaryTechOutlinedIcon /> },
 ];
 
 interface LevelMapProps {
-  /** Porcentaje global de completitud (0-100) para calcular el nodo activo */
   overallCompletionPct: number;
 }
 
-/**
- * Mapa de progreso tipo videojuego.
- * Cada nodo representa un hito del camino; el estado se calcula dinámicamente.
- */
 export const LevelMap = ({ overallCompletionPct }: LevelMapProps) => {
   const getStatus = (index: number): NodeStatus => {
     const node = LEVEL_NODES[index];
@@ -62,13 +57,10 @@ export const LevelMap = ({ overallCompletionPct }: LevelMapProps) => {
 
   return (
     <div>
-      {/* Encabezado */}
       <div className="flex items-center justify-between mb-5">
         <div>
           <h3 className="font-semibold text-gray-800 text-base">Tu camino de aprendizaje</h3>
-          <p className="text-xs text-gray-400 mt-0.5">
-            Responde preguntas para desbloquear el siguiente nivel
-          </p>
+          <p className="text-xs text-gray-400 mt-0.5">Responde preguntas para desbloquear el siguiente nivel</p>
         </div>
         {nextNode && (
           <span className="text-xs text-indigo-600 font-semibold bg-indigo-50 border border-indigo-100 px-3 py-1 rounded-full whitespace-nowrap">
@@ -77,7 +69,6 @@ export const LevelMap = ({ overallCompletionPct }: LevelMapProps) => {
         )}
       </div>
 
-      {/* Mapa de nodos */}
       <div className="overflow-x-auto -mx-2 px-2 pb-1">
         <div className="flex items-center min-w-max">
           {LEVEL_NODES.map((node, index) => {
@@ -98,15 +89,12 @@ export const LevelMap = ({ overallCompletionPct }: LevelMapProps) => {
                 ? 'text-gray-600 font-semibold'
                 : 'text-gray-300 font-medium';
 
-            const lineClass =
-              status === 'completed' ? 'bg-indigo-400' : 'bg-gray-200';
+            const lineClass = status === 'completed' ? 'bg-indigo-400' : 'bg-gray-200';
 
             return (
               <div key={node.id} className="flex items-center">
-                {/* Nodo */}
                 <div className="flex flex-col items-center w-20">
                   <div className="relative flex items-center justify-center">
-                    {/* Anillo pulsante en el nodo activo */}
                     {status === 'active' && (
                       <span className="absolute w-14 h-14 rounded-full bg-indigo-400 animate-ping opacity-20" />
                     )}
@@ -116,14 +104,9 @@ export const LevelMap = ({ overallCompletionPct }: LevelMapProps) => {
                       {status === 'locked' && <LockOutlinedIcon fontSize="small" />}
                     </div>
                   </div>
-
-                  <p className={`text-xs mt-2 text-center leading-tight ${titleClass}`}>
-                    {node.title}
-                  </p>
+                  <p className={`text-xs mt-2 text-center leading-tight ${titleClass}`}>{node.title}</p>
                   <p className="text-xs text-gray-400 text-center">{node.requiredPct}%</p>
                 </div>
-
-                {/* Línea conectora */}
                 {!isLast && (
                   <div className={`h-0.5 w-10 flex-shrink-0 rounded-full transition-all duration-500 ${lineClass}`} />
                 )}
@@ -133,7 +116,6 @@ export const LevelMap = ({ overallCompletionPct }: LevelMapProps) => {
         </div>
       </div>
 
-      {/* Barra de progreso hacia el siguiente hito */}
       {currentNode && nextNode && (
         <div className="mt-5 bg-indigo-50 border border-indigo-100 rounded-xl px-4 py-3 flex items-center gap-3">
           <ArrowForwardRoundedIcon fontSize="small" className="text-indigo-400 flex-shrink-0" />
@@ -156,7 +138,6 @@ export const LevelMap = ({ overallCompletionPct }: LevelMapProps) => {
         </div>
       )}
 
-      {/* Mensaje de completitud total */}
       {!nextNode && (
         <div className="mt-5 bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3 text-center">
           <p className="text-emerald-700 font-semibold text-sm">

@@ -4,10 +4,8 @@ import LanguageIcon from '@mui/icons-material/Language';
 import ScienceOutlinedIcon from '@mui/icons-material/ScienceOutlined';
 import AccountBalanceOutlinedIcon from '@mui/icons-material/AccountBalanceOutlined';
 import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
-import type { SubjectIconKey } from '../../../../types/subject.types';
-import type { Subject } from '../../../../types/subject.types';
-import type { SubjectProgress } from '../../../../types/progress.types';
-import { ProgressBar } from '../../../../components/ui/ProgressBar/ProgressBar';
+import type { Subject, SubjectIconKey, SubjectProgress } from '../types';
+import { ProgressBar } from './ProgressBar';
 
 const ICON_MAP: Record<SubjectIconKey, React.ReactNode> = {
   'calculate': <CalculateOutlinedIcon fontSize="large" />,
@@ -24,17 +22,12 @@ interface SubjectCardProps {
   onSelect: (subjectId: string) => void;
 }
 
-/** Devuelve clase Tailwind según la tasa de aciertos. */
 const resolveAccuracyLabel = (accuracyPct: number): { text: string; className: string } => {
   if (accuracyPct >= 70) return { text: 'Bueno', className: 'bg-emerald-100 text-emerald-700' };
   if (accuracyPct >= 40) return { text: 'Regular', className: 'bg-yellow-100 text-yellow-700' };
   return { text: 'Por mejorar', className: 'bg-red-100 text-red-700' };
 };
 
-/**
- * Tarjeta interactiva que representa una materia del Saber Pro.
- * Muestra ícono, nombre, descripción, barra de progreso y tasa de aciertos.
- */
 export const SubjectCard = ({ subject, progress, onSelect }: SubjectCardProps) => {
   const completionPct =
     progress.totalQuestions > 0
@@ -52,46 +45,33 @@ export const SubjectCard = ({ subject, progress, onSelect }: SubjectCardProps) =
   return (
     <button
       onClick={() => onSelect(subject.id)}
-      className={`${subject.bgColor} rounded-2xl p-5 text-left w-full
-        transition-all duration-200 border border-transparent
-        hover:shadow-md hover:-translate-y-1
-        focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
+      className={`${subject.bgColor} rounded-2xl p-5 text-left w-full transition-all duration-200 border border-transparent hover:shadow-md hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
       aria-label={`Ir a ${subject.name}`}
     >
-      {/* Cabecera */}
       <div className="flex items-start justify-between mb-3">
         <span className={`${subject.accentColor}`} aria-hidden="true">
           {ICON_MAP[subject.iconKey]}
         </span>
-        {hasStarted && (
+        {hasStarted ? (
           <span className={`text-xs font-semibold px-2 py-1 rounded-full ${accuracyLabel.className}`}>
             {accuracyLabel.text}
           </span>
-        )}
-        {!hasStarted && (
+        ) : (
           <span className="text-xs font-medium px-2 py-1 rounded-full bg-gray-100 text-gray-500">
             Sin iniciar
           </span>
         )}
       </div>
 
-      {/* Nombre y descripción */}
       <h3 className="font-bold text-gray-900 text-base mb-1">{subject.name}</h3>
       <p className="text-sm text-gray-500 mb-4 line-clamp-2">{subject.description}</p>
 
-      {/* Progreso */}
       <div className="space-y-1.5">
         <div className="flex justify-between text-xs text-gray-400">
-          <span>
-            {progress.completedQuestions} / {progress.totalQuestions} preguntas
-          </span>
+          <span>{progress.completedQuestions} / {progress.totalQuestions} preguntas</span>
           <span className={`font-semibold ${subject.accentColor}`}>{completionPct}%</span>
         </div>
-        <ProgressBar
-          percentage={completionPct}
-          colorClass={subject.progressColor}
-          heightClass="h-2"
-        />
+        <ProgressBar percentage={completionPct} colorClass={subject.progressColor} heightClass="h-2" />
       </div>
     </button>
   );

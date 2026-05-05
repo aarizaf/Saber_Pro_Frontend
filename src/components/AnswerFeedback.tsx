@@ -7,17 +7,11 @@ interface AnswerFeedbackProps {
   explanation: string;
 }
 
-/**
- * Panel de retroalimentación que aparece tras confirmar una respuesta.
- * Muestra si fue correcta/incorrecta y la explicación pedagógica.
- */
 export const AnswerFeedback = ({ isCorrect, explanation }: AnswerFeedbackProps) => {
   return (
     <div
       className={`rounded-2xl border p-4 flex gap-3 ${
-        isCorrect
-          ? 'bg-emerald-50 border-emerald-200'
-          : 'bg-red-50 border-red-200'
+        isCorrect ? 'bg-emerald-50 border-emerald-200' : 'bg-red-50 border-red-200'
       }`}
     >
       <div className="flex-shrink-0 mt-0.5">

@@ -1,4 +1,4 @@
-import type { QuizQuestion } from '../types/quiz.types';
+import type { QuizQuestion } from '../types';
 
 /**
  * Banco de preguntas de muestra por materia.
