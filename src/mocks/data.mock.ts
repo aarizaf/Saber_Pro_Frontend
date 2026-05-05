@@ -105,7 +105,7 @@ export const MOCK_USER_STATS: UserStats = {
   dailyGoalCompleted: 2,
   dailyGoalTarget: 10,
   objective: {
-    name: 'Saber Pro (ECAES)',
-    description: 'Para universitarios — evaluación de calidad',
+    name: 'Saber Pro ICFES',
+    description: 'Prepararte para el examen de estado con un enfoque integral en todas las áreas evaluadas.',
   },
 };
