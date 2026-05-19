@@ -1,7 +1,7 @@
 import {
   createContext,
   useContext,
-  useEffect,
+  useLayoutEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -38,10 +38,15 @@ const resolveInitialTheme = (): ThemeMode => {
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setThemeState] = useState<ThemeMode>(resolveInitialTheme);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const root = document.documentElement;
+    const body = document.body;
+    const isDark = theme === 'dark';
 
-    root.classList.toggle('dark', theme === 'dark');
+    root.classList.toggle('dark', isDark);
+    body.classList.toggle('dark', isDark);
+    root.setAttribute('data-theme', theme);
+    body.setAttribute('data-theme', theme);
     root.style.colorScheme = theme;
     window.localStorage.setItem(THEME_STORAGE_KEY, theme);
   }, [theme]);

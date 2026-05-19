@@ -120,17 +120,17 @@ const buildInitials = (profile: UserProfile | null): string => {
 };
 
 const ProfileSkeleton = () => (
-  <div className="rounded-[28px] bg-gradient-to-br from-indigo-600 to-blue-500 p-5 text-white shadow-lg shadow-indigo-900/15">
-    <div className="flex items-start gap-4">
-      <div className="h-14 w-14 animate-pulse rounded-2xl bg-white/25" />
+  <div className="rounded-[24px] border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950/70">
+    <div className="flex items-start gap-3">
+      <div className="h-12 w-12 animate-pulse rounded-2xl bg-slate-200 dark:bg-slate-800" />
       <div className="min-w-0 flex-1 space-y-2">
-        <div className="h-4 w-28 animate-pulse rounded bg-white/25" />
-        <div className="h-3 w-40 animate-pulse rounded bg-white/20" />
+        <div className="h-4 w-28 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
+        <div className="h-3 w-40 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
       </div>
     </div>
-    <div className="mt-5 grid grid-cols-2 gap-3">
-      <div className="h-14 animate-pulse rounded-2xl bg-white/15" />
-      <div className="h-14 animate-pulse rounded-2xl bg-white/15" />
+    <div className="mt-4 flex gap-2">
+      <div className="h-9 flex-1 animate-pulse rounded-full bg-slate-200 dark:bg-slate-800" />
+      <div className="h-9 w-24 animate-pulse rounded-full bg-slate-200 dark:bg-slate-800" />
     </div>
   </div>
 );
@@ -224,36 +224,28 @@ const AppSidebar = ({
           {isProfileLoading ? (
             <ProfileSkeleton />
           ) : (
-            <div className="rounded-[28px] bg-gradient-to-br from-indigo-600 via-indigo-500 to-sky-500 p-5 text-white shadow-lg shadow-indigo-900/15">
-              <div className="flex items-start gap-4">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15 text-lg font-bold">
+            <div className="rounded-[24px] border border-slate-200 bg-slate-50/95 p-4 dark:border-slate-800 dark:bg-slate-950/70">
+              <div className="flex items-start gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 to-sky-500 text-base font-bold text-white shadow-sm shadow-indigo-900/15">
                   {initials}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-lg font-semibold">{displayName}</p>
-                  <p className="truncate text-sm text-indigo-50/90">
+                  <p className="truncate text-base font-semibold text-slate-900 dark:text-slate-100">
+                    {displayName}
+                  </p>
+                  <p className="truncate text-sm text-slate-500 dark:text-slate-400">
                     {profile?.email ?? 'Sin correo disponible'}
                   </p>
                 </div>
               </div>
 
-              <div className="mt-5 grid grid-cols-2 gap-3">
-                <div className="rounded-2xl bg-white/12 px-3 py-3">
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-indigo-100/85">
-                    Carrera
-                  </p>
-                  <p className="mt-1 text-sm font-medium text-white">
-                    {profile?.carrera ?? 'Pendiente'}
-                  </p>
-                </div>
-                <div className="rounded-2xl bg-white/12 px-3 py-3">
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-indigo-100/85">
-                    Semestre
-                  </p>
-                  <p className="mt-1 text-sm font-medium text-white">
-                    {profile?.semestre ?? '-'}
-                  </p>
-                </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <span className="inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
+                  {profile?.carrera ?? 'Carrera pendiente'}
+                </span>
+                <span className="inline-flex items-center rounded-full border border-indigo-200 bg-indigo-50 px-3 py-2 text-xs font-semibold text-indigo-600 dark:border-indigo-900 dark:bg-indigo-950/40 dark:text-indigo-300">
+                  Semestre {profile?.semestre ?? '-'}
+                </span>
               </div>
             </div>
           )}
